@@ -1,0 +1,45 @@
+[
+  {
+    "Name": "Basic",
+    "Duration": 1,
+    "Details": [
+      "Sending messages in chat",
+      "Create new meeting"
+    ],
+    "Price": {
+      "NetValue": 40.65,
+      "GrossValue": 50,
+      "TotalValue": 50
+    }
+  },
+  {
+    "Name": "Business",
+    "Duration": 6,
+    "Details": [
+      "Conducting video conversations",
+      "Sending messages in chat",
+      "Create new meeting"
+    ],
+    "Price": {
+      "NetValue": 81.30,
+      "GrossValue": 100,
+      "TotalValue": 100
+    }
+  },
+  {
+    "Name": "Business VIP",
+    "Duration": 12,
+    "Details": [
+      "Conducting video conversations",
+      "Sending messages in chat",
+      "Create new meeting",
+      "Cancellation meetings",
+      "Training plan"
+    ],
+    "Price": {
+      "NetValue": 121.95,
+      "GrossValue": 150,
+      "TotalValue": 150
+    }
+  }
+]
