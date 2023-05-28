@@ -11,7 +11,8 @@ namespace SubscriptionService.Entity
             //Database.EnsureCreated();
         }
 
-        public DbSet<SubscriptionInfo> SubscriptionInfo { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<SubscriptionDetails> SubscriptionDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -41,5 +41,59 @@
       "GrossValue": 150,
       "TotalValue": 150
     }
+  },
+  {
+    "Name": "Platinum",
+    "Duration": 12,
+    "Details": [
+      "Conducting video conversations",
+      "Sending messages in chat",
+      "Create new meeting",
+      "Cancellation meetings",
+      "Training plan",
+      "Consultation live"
+    ],
+    "Price": {
+      "NetValue": 162.60,
+      "GrossValue": 200,
+      "TotalValue": 200
+    }
+  },
+  {
+    "Name": "Platinum VIP",
+    "Duration": 12,
+    "Details": [
+      "Conducting video conversations",
+      "Sending messages in chat",
+      "Create new meeting",
+      "Cancellation meetings",
+      "Training plan",
+      "Consultation live",
+      "Training live"
+    ],
+    "Price": {
+      "NetValue": 178.86,
+      "GrossValue": 220,
+      "TotalValue": 220
+    }
+  },
+  {
+    "Name": "Diamond",
+    "Duration": 12,
+    "Details": [
+      "Conducting video conversations",
+      "Sending messages in chat",
+      "Create new meeting",
+      "Cancellation meetings",
+      "Training plan",
+      "Consultation live",
+      "Training live",
+      "Koxy"
+    ],
+    "Price": {
+      "NetValue": 203.25,
+      "GrossValue": 250,
+      "TotalValue": 250
+    }
   }
 ]

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SubscriptionService.Api.Model;
 using SubscriptionService.Contract;
 using SubscriptionService.Entity.Models;
 using SubscriptionService.Repository;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SubscriptionService.API.Controllers
@@ -10,36 +12,52 @@ namespace SubscriptionService.API.Controllers
     [Route("api/[controller]")]
     public class SubscriptionController : ControllerBase
     {
-        private readonly ISubscriptionInfoRepository _subscriptionInfoRepository;
+        private readonly ISubscriptionRepository _subscriptionRepository;
 
-        public SubscriptionController(ISubscriptionInfoRepository subscriptionInfoRepository)
+        public SubscriptionController(ISubscriptionRepository subscriptionRepository)
         {
-            _subscriptionInfoRepository = subscriptionInfoRepository;
+            _subscriptionRepository = subscriptionRepository;
         }
 
         [HttpGet("{clientId}")]
         public async Task<IActionResult> GetSubscription(int clientId)
         {
-            var subscription = await _subscriptionInfoRepository.GetSubscriptionAsync(clientId);
+            var subscription = await _subscriptionRepository.GetSubscriptionAsync(clientId);
 
-            if (subscription is null)
-                return NotFound($"Subscription for client id {clientId} doesn't exist.");
+            var lastActiveSubscription = subscription.SubscriptionDetails.Any()
+                ? subscription.SubscriptionDetails.OrderByDescending(x => x.ExpiredDate).First()
+                : null;
 
-            return Ok(subscription);
-        }
-
-        [HttpPost("create")]
-        public async Task CreateSubscription([FromBody] SubscriptionDto subInfo)
-        {
-            var subscriptionInfo = new SubscriptionInfo()
+            var subscriptionDto = new SubscriptionDto()
             {
-                SubscriptionName = subInfo.SubscriptionName,
-                PurchaseDate = subInfo.PurchaseDate,
-                ExpiredDate = subInfo.ExpiredDate,
-                ClientId = subInfo.ClientId
+                Id = subscription.Id,
+                SubscriptionStatus = subscription.SubscriptionStatus,
+                ClientId = clientId
             };
 
-            await _subscriptionInfoRepository.CreateSubscriptionAsync(subscriptionInfo);
+            if (lastActiveSubscription != null)
+                subscriptionDto.ActiveSubscription = new SubscriptionDetailsDto()
+                {
+                    Id = lastActiveSubscription.Id,
+                    SubscriptionName = lastActiveSubscription.SubscriptionName,
+                    ExpiredDate = lastActiveSubscription.ExpiredDate,
+                    PurchaseDate = lastActiveSubscription.PurchaseDate,
+                    SubscriptionId = lastActiveSubscription.SubscriptionId
+                };
+
+            return Ok(subscriptionDto);
         }
+
+        //[HttpPost("initial")]
+        //public async Task CreateSubscription([FromBody] SubscriptionInput subscriptionInput)
+        //{
+        //    var subscription = new Subscription()
+        //    {
+        //        SubscriptionStatus = subscriptionInput.SubscriptionStatus,
+        //        ClientId = subscriptionInput.ClientId
+        //    };
+
+        //    await _subscriptionRepository.CreateSubscriptionAsync(subscription);
+        //}
     }
 }

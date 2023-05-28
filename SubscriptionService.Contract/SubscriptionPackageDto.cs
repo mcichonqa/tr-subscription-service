@@ -6,7 +6,7 @@ namespace SubscriptionService.Contract
     public class SubscriptionPackageDto
     {
         public string Name { get; set; }
-        public DateTime Duration { get; set; }
+        public int Duration { get; set; }
         public List<string> Details { get; set; }
         public PriceDto Price { get; set; }
     }

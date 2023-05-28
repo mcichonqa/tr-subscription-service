@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +25,12 @@
     <ProjectReference Include="..\SubscriptionService.Contract\SubscriptionService.Contract.csproj" />
     <ProjectReference Include="..\SubscriptionService.Package\SubscriptionService.Package.csproj" />
     <ProjectReference Include="..\SubscriptionService.Repository\SubscriptionService.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SharedModels">
+      <HintPath>..\..\..\SharedModels\bin\Debug\net6.0\SharedModels.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

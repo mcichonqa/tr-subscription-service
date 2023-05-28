@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SubscriptionService.Api.Consumers;
 using SubscriptionService.Entity;
 using SubscriptionService.Package;
 using SubscriptionService.Repository;
@@ -53,11 +55,29 @@ namespace SubscriptionService.API
             services.AddControllers();
 
             services.AddSingleton<PackageProvider>();
-            services.AddScoped<ISubscriptionInfoRepository, SubscriptionInfoRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<UserCreatedConsumer>(typeof(UserCreatedConsumerDefinition));
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

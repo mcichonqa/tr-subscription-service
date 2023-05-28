@@ -33,7 +33,7 @@ namespace SubscriptionService.Api.Controllers
                 var subPackage = new SubscriptionPackageDto()
                 {
                     Name = package.Name,
-                    Duration = DateTime.UtcNow.AddMonths(package.Duration),
+                    Duration = package.Duration,
                     Details = package.Details,
                     Price = new PriceDto()
                     {

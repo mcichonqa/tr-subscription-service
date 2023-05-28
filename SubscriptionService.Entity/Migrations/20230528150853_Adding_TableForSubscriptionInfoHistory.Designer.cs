@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SubscriptionService.Entity;
 
@@ -11,9 +12,11 @@ using SubscriptionService.Entity;
 namespace SubscriptionService.Entity.Migrations
 {
     [DbContext(typeof(SubscriptionContext))]
-    partial class SubscriptionContextModelSnapshot : ModelSnapshot
+    [Migration("20230528150853_Adding_TableForSubscriptionInfoHistory")]
+    partial class AddingTableForSubscriptionInfoHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
