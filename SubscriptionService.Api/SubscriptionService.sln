@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Api", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Entity", "..\SubscriptionService.Entity\SubscriptionService.Entity.csproj", "{D234BA41-D59A-408F-9ACC-95CDC5327841}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Repository", "..\SubscriptionService.Repository\SubscriptionService.Repository.csproj", "{A3B030F5-62A3-43FD-8B8A-8B68C385AA0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Application", "..\SubscriptionService.Repository\SubscriptionService.Application.csproj", "{A3B030F5-62A3-43FD-8B8A-8B68C385AA0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Contract", "..\SubscriptionService.Contract\SubscriptionService.Contract.csproj", "{37704F3D-8ECD-485A-BB00-30C2986817EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriptionService.Package", "..\SubscriptionService.Package\SubscriptionService.Package.csproj", "{6B8573B2-8818-4BD3-AB94-E556254762F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionService.Package", "..\SubscriptionService.Package\SubscriptionService.Package.csproj", "{6B8573B2-8818-4BD3-AB94-E556254762F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

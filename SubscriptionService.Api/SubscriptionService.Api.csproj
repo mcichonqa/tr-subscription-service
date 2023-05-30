@@ -24,7 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SubscriptionService.Contract\SubscriptionService.Contract.csproj" />
     <ProjectReference Include="..\SubscriptionService.Package\SubscriptionService.Package.csproj" />
-    <ProjectReference Include="..\SubscriptionService.Repository\SubscriptionService.Repository.csproj" />
+    <ProjectReference Include="..\SubscriptionService.Repository\SubscriptionService.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

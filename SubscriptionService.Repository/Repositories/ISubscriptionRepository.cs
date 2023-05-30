@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SubscriptionService.Repository
+namespace SubscriptionService.Application.Repositories
 {
     public interface ISubscriptionRepository
     {

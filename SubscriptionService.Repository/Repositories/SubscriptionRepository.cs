@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SubscriptionService.Repository
+namespace SubscriptionService.Application.Repositories
 {
     public class SubscriptionRepository : ISubscriptionRepository
     {

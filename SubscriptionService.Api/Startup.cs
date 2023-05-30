@@ -7,9 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SubscriptionService.Api.Consumers;
+using SubscriptionService.Application.Repositories;
+using SubscriptionService.Application.Services;
 using SubscriptionService.Entity;
 using SubscriptionService.Package;
-using SubscriptionService.Repository;
 
 namespace SubscriptionService.API
 {
@@ -56,6 +57,7 @@ namespace SubscriptionService.API
 
             services.AddSingleton<PackageProvider>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionService, SubscriptionsService>();
 
             services.AddMassTransit(x =>
             {

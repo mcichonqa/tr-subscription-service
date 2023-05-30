@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using SharedModels.Events;
+using SubscriptionService.Application.Repositories;
 using SubscriptionService.Entity.Models;
-using SubscriptionService.Repository;
 using System.Threading.Tasks;
 
 namespace SubscriptionService.Api.Consumers
