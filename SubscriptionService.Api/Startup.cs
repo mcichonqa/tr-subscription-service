@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SubscriptionService.Api.Consumers;
+using SubscriptionService.Api.Workers;
 using SubscriptionService.Application.Repositories;
 using SubscriptionService.Application.Services;
 using SubscriptionService.Entity;
@@ -52,7 +53,12 @@ namespace SubscriptionService.API
             //        };
             //    });
 
-            services.AddDbContext<SubscriptionContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SubscriptionDb")));
+            services.AddDbContext<SubscriptionContext>(x =>
+            {
+                x.UseSqlServer(Configuration.GetConnectionString("SubscriptionDb"));
+                x.EnableSensitiveDataLogging();
+            });
+
             services.AddControllers();
 
             services.AddSingleton<PackageProvider>();
@@ -74,6 +80,8 @@ namespace SubscriptionService.API
                     cfg.ConfigureEndpoints(context);
                 });
             });
+
+            services.AddHostedService<SubscriptionStatusBackgroundService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

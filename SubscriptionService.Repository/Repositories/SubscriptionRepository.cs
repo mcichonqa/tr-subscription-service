@@ -17,6 +17,9 @@ namespace SubscriptionService.Application.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<ICollection<Subscription>> GetSubscriptionsAsync() => await _dbContext.Subscriptions.Include(x => x.SubscriptionDetails)
+            .ToListAsync();
+
         public async Task<Subscription> GetSubscriptionAsync(int clientId)
         {
             var subscription = await _dbContext.Subscriptions.Include(x => x.SubscriptionDetails)
@@ -44,6 +47,16 @@ namespace SubscriptionService.Application.Repositories
         public async Task CreateSubscriptionDetailsAsync(SubscriptionDetails subscriptionDetails)
         {
             await _dbContext.SubscriptionDetails.AddAsync(subscriptionDetails);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<SubscriptionDetails>> GetAllSubscriptionDetailsAsync() => await _dbContext.SubscriptionDetails.Include(x => x.Subscription)
+            .AsNoTracking()
+            .ToListAsync();
+
+        public async Task UpdateSubscriptionAsync(SubscriptionDetails subscriptionDetails)
+        {
+            _dbContext.SubscriptionDetails.Update(subscriptionDetails);
             await _dbContext.SaveChangesAsync();
         }
     }

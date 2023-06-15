@@ -6,5 +6,6 @@ namespace SubscriptionService.Application.Services
     public interface ISubscriptionService
     {
         Task<SubscriptionDto> GetSubscription(int clientId);
+        Task SetSubscriptionStatusAsync();
     }
 }
