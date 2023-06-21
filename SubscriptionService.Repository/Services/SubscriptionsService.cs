@@ -47,46 +47,28 @@ namespace SubscriptionService.Application.Services
 
         public async Task SetSubscriptionStatusAsync()
         {
-            List<string> constraintStatuses = new() { SubscriptionStatus.Expired, SubscriptionStatus.ExpiresSoon };
-
             var subscriptionDetails = await _subscriptionRepository.GetAllSubscriptionDetailsAsync();
 
-            subscriptionDetails = subscriptionDetails.Where(x => !constraintStatuses.Contains(x.Subscription.SubscriptionStatus))
-                .ToList();
-
-            var orderedSubscriptionsDetails = subscriptionDetails.GroupBy(
+            var orderedSubscriptionsDetails = subscriptionDetails.Where(x => x.Subscription.SubscriptionStatus != SubscriptionStatus.Expired)
+                .GroupBy(
                 x => x.SubscriptionId,
                 (key, group) => new { Key = key, Collection = group.OrderByDescending(x => x.ExpiredDate).Take(1) })
                 .SelectMany(x => x.Collection);
 
-            foreach(string status in constraintStatuses)
-                await UpdateSubscriptionStatusAsync(orderedSubscriptionsDetails, status);
+            foreach(var orderedSubscriptionDetails in orderedSubscriptionsDetails)
+            {
+                if (orderedSubscriptionDetails.ExpiredDate.Date == DateTime.Now.Date)
+                    await UpdateSubscriptionStatusAsync(orderedSubscriptionDetails, SubscriptionStatus.Expired);
+
+                if (orderedSubscriptionDetails.ExpiredDate.Date == DateTime.Now.Date.AddDays(1))
+                    await UpdateSubscriptionStatusAsync(orderedSubscriptionDetails, SubscriptionStatus.ExpiresSoon);
+            }
         }
 
-        private async Task UpdateSubscriptionStatusAsync(IEnumerable<SubscriptionDetails> orderedSubscriptionDetails, string subscriptionStatus)
+        private async Task UpdateSubscriptionStatusAsync(SubscriptionDetails orderedSubscriptionDetails, string subscriptionStatus)
         {
-            List<SubscriptionDetails> subscriptionForUpdate = new List<SubscriptionDetails>();
-
-            switch (subscriptionStatus)
-            {
-                case SubscriptionStatus.Expired:
-                    subscriptionForUpdate = orderedSubscriptionDetails.Where(x => x.ExpiredDate.Date == DateTime.Now.Date)
-                        .ToList();
-                    break;
-                case SubscriptionStatus.ExpiresSoon:
-                    subscriptionForUpdate = orderedSubscriptionDetails.Where(x => x.ExpiredDate.Date == DateTime.Now.Date.AddDays(1))
-                        .ToList();
-                    break;
-                default:
-                    throw new Exception($"Urecognized subscription status {subscriptionStatus}.");
-
-            }
-
-            foreach (var subscription in subscriptionForUpdate)
-            {
-                subscription.Subscription.SubscriptionStatus = subscriptionStatus;
-                await _subscriptionRepository.UpdateSubscriptionAsync(subscription);
-            }
+            orderedSubscriptionDetails.Subscription.SubscriptionStatus = subscriptionStatus;
+            await _subscriptionRepository.UpdateSubscriptionAsync(orderedSubscriptionDetails);
         }
     }
 }
